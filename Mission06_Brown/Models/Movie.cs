@@ -8,25 +8,26 @@ namespace Mission06_Brown.Models
         [Key]
         public int MovieId { get; set; }
 
-        [Required(ErrorMessage = "Please select a category.")]
         [ForeignKey("Category")]
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         public Category? Category { get; set; }
 
         [Required(ErrorMessage = "Please enter a title.")]
         public string Title { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Please enter a year.")]
-        [Range(1888, 2100, ErrorMessage = "Please enter a valid year.")]
+        [Range(1888, 2100, ErrorMessage = "Please enter a valid year (1888 or later).")]
         public int Year { get; set; }
 
-        [Required(ErrorMessage = "Please enter a director.")]
-        public string Director { get; set; } = string.Empty;
+        public string? Director { get; set; }
 
-        [Required(ErrorMessage = "Please select a rating.")]
-        public string Rating { get; set; } = string.Empty;
+        public string? Rating { get; set; }
 
+        [Required(ErrorMessage = "Please specify if the movie was edited.")]
         public bool Edited { get; set; }
+
+        [Required(ErrorMessage = "Please specify if the movie was copied to Plex.")]
+        public bool CopiedToPlex { get; set; }
 
         [StringLength(25, ErrorMessage = "Lent To must be 25 characters or fewer.")]
         public string? LentTo { get; set; }

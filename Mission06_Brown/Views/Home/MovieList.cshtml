@@ -1,0 +1,62 @@
+@model IEnumerable<Mission06_Brown.Models.Movie>
+
+@{
+    ViewData["Title"] = "Movie Collection";
+}
+
+<h1 class="display-4 text-center mb-4">Joel's Movie Collection</h1>
+<hr />
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Title</th>
+                <th>Year</th>
+                <th>Director</th>
+                <th>Category</th>
+                <th>Rating</th>
+                <th>Edited</th>
+                <th>Copied to Plex</th>
+                <th>Lent To</th>
+                <th>Notes</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var movie in Model)
+            {
+                <tr>
+                    <td>@movie.Title</td>
+                    <td>@movie.Year</td>
+                    <td>@(movie.Director ?? "N/A")</td>
+                    <td>@(movie.Category?.CategoryName ?? "N/A")</td>
+                    <td>@(movie.Rating ?? "N/A")</td>
+                    <td>@(movie.Edited ? "Yes" : "No")</td>
+                    <td>@(movie.CopiedToPlex ? "Yes" : "No")</td>
+                    <td>@(movie.LentTo ?? "N/A")</td>
+                    <td>@(movie.Notes ?? "N/A")</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@movie.MovieId" class="btn btn-sm btn-primary me-1">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@movie.MovieId" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info text-center" role="alert">
+        No movies in the collection yet. <a asp-action="EnterMovie">Add a movie</a> to get started!
+    </div>
+}
